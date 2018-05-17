@@ -1,1 +1,1 @@
-# robotium
+# This is robotium code.
