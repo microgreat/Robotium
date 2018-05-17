@@ -1,7 +1,5 @@
 package com.xiaomi.o2o.test;
 
-
-
 import xuxu.autotest.AdbDevice;
 
 import xuxu.autotest.element.Element;
@@ -16,47 +14,25 @@ import android.view.KeyEvent;
 
 import android.view.View;
 
-
-
 import com.robotium.solo.By;
 
 import com.robotium.solo.Solo;
-
-
 
 @SuppressWarnings("rawtypes")
 
 public class TestO2O extends ActivityInstrumentationTestCase2 {
 
-
-
 	private static final String LAUNCHER_ACTIVITY_FULL_CLASSNAME = "com.xiaomi.o2o.activity.O2OTabActivity";
-
-
 
 	private static Class<?> launcherActivityClass;
 
-
-
 	static {
-
-
 
 		try {
 
-
-
-			launcherActivityClass = Class
-
-
-
-			.forName(LAUNCHER_ACTIVITY_FULL_CLASSNAME);
-
-
-
+			launcherActivityClass = Class.forName(LAUNCHER_ACTIVITY_FULL_CLASSNAME);
+			
 		} catch (ClassNotFoundException e) {
-
-
 
 			throw new RuntimeException(e);
 
@@ -64,129 +40,65 @@ public class TestO2O extends ActivityInstrumentationTestCase2 {
 
 	}
 
-
-
 	@SuppressWarnings("unchecked")
 
 	public TestO2O() throws ClassNotFoundException {
-
-
-
+		
 		super(launcherActivityClass);
-
-
 
 	}
 
-
-
 	private Solo solo;
-
-
 
 	private AdbDevice adbDevice;
 
-
-
 	private Position position;
-
-
 
 	@Override
 
 	protected void setUp() throws Exception {
 
-
-
 		solo = new Solo(getInstrumentation(), getActivity());
-
-
 
 		adbDevice = new AdbDevice();
 
-
-
 		position = new Position();
-
-		
-
-		
 
 	}
 
-
-
 	// 测试小米生活首页是否有“小米生活”title
-
-
 
 	public void test001Title() throws Exception {
 
-		
-
 		boolean expected = true;
-
-
 
 		boolean actual = solo.searchText("小米生活",0,false);
 
 		assertEquals("小米生活  are not found", expected, actual);
 
-		
-
 	}
-
-
 
 	// 测试小米生活首页是否定位到城市“北京”
 
-
-
 	public void test002Location() {
 
-
-
 		boolean expected = true;
-
-
 
 		boolean actual = solo.searchText("北京");
 
 		assertEquals("定位城市：北京  are not found", expected, actual);
 
-
-
 	}
-
-	
 
 	// 测试首页是否有各个分类
 
-
-
 	public void test003Category() throws Exception {
-
-
 
 		boolean expected = true;
 
+		boolean actual = solo.searchText("美食") && solo.searchText("电影")&& solo.searchText("KTV") && solo.searchText("酒店")&& solo.searchText("更多分类");
 
-
-		boolean actual = solo.searchText("美食") && solo.searchText("电影")
-
-
-
-		&& solo.searchText("KTV") && solo.searchText("酒店")
-
-
-
-		&& solo.searchText("更多分类");
-
-
-
-		assertEquals("美食 or 电影 or KTV or 酒店 or 更多分类  are not found", expected,
-
-				actual);
+		assertEquals("美食 or 电影 or KTV or 酒店 or 更多分类  are not found", expected,	actual);
 
 	}
 
@@ -198,15 +110,11 @@ public class TestO2O extends ActivityInstrumentationTestCase2 {
 
 	public void test004List() throws Exception {
 
-
-
 		boolean actual = solo.searchText("元") && solo.searchText("人购买");
 
 		boolean expected = true;
 
 		assertEquals("首页列表：元 or人购买  are not found", expected, actual);
-
-
 
 	}
 
